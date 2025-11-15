@@ -180,7 +180,7 @@
         } catch {}
       }
 
-      const playerPromise = new Promise((resolve) => {
+      const playerPromise = new Promise((resolve, reject) => {
         window.onYouTubeIframeAPIReady = function () {
           const player = new YT.Player("player", {
             events: {
@@ -194,6 +194,10 @@
                 exitFullScreen();
                 container.className = "finished";
               },
+              onError: function (event) {
+                console.error(event);
+                reject(event);
+              }
             },
           });
         };
